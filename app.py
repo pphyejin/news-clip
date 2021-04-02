@@ -7,8 +7,8 @@ import datetime
 
 import schedule
 
-# client = MongoClient('localhost', 27017)
-client = MongoClient('mongodb://test:test@13.124.124.45', 27017)
+client = MongoClient('localhost', 27017)
+# client = MongoClient('mongodb://test:test@아이피주소', 27017)
 db = client.dbmyproject
 
 app = Flask(__name__)
