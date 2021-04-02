@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Clip</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <style>
+        .relative {
+            padding-bottom: 0;
+        }
+
+        a.a_t:hover {color:#6366F1;}
+
+        .grid0 {
+            font-weight: 600;
+            --tw-text-opacity: 1;
+            color: rgba(248, 113, 113, var(--tw-text-opacity));
+        }
+
+    </style>
+
+
+<!--    <script src="{{ url_for('static', filename='index.js')}}"></script>-->
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#news-box").html("");
+            make_date();
+            // 오늘 날짜로 뉴스를 보여주기 위해서 먼저 호출
+            let dt = new Date();
+            let today = `${dt.getFullYear()}-${dt.getMonth() + 1}-${dt.getDate()}`;
+            showNews(today);
+        });
+
+        // 오늘 날짜로 let dateValue = `${dt.getFullYear()}-${dt.getMonth() + 1}-${dt.getDate()}`;부터 일주일 구하기
+        function make_date() {
+            for (let i = 0; i < 7; i++) {
+                let dt = new Date();
+                dt.setDate(dt.getDate() - i)
+                let arrDayStr = ['일', '월', '화', '수', '목', '금', '토'];
+                // Sever로 보낼 date 형식 HHHH-MM-DD
+                let dateValue = `${dt.getFullYear()}-${dt.getMonth() + 1}-${dt.getDate()}`;
+                // Front에 보여줄 date 형식 HHHH.MM.DD 요일
+                let dateDisplayStr = (dt.getFullYear() + '.' + dt.getMonth() + 1) + '.' + dt.getDate() + ' ' + arrDayStr[dt.getDay()];
+
+                let dateTag = document.getElementById(`date_${i}`)
+                // Tag를 click할 경우 showNews가 실행되도록 함. (onclick=showNews('YYYY-MM-DD')
+                dateTag.addEventListener('click', function () {
+                    $("#news-box").html("");
+                    showNews(dateValue)
+                });
+                dateTag.innerHTML = dateDisplayStr;
+            }
+        }
+
+        // 날짜 클릭했을때, 빨간색으로 바꾸기
+        $(function () {
+            let $grid0 = $('.grid0');
+            let $grid1 = $('.grid1');
+            let $grid2 = $('.grid2');
+            let $grid3 = $('.grid3');
+            let $grid4 = $('.grid4');
+            let $grid5 = $('.grid5');
+            let $grid6 = $('.grid6');
+
+            $grid0.click(function () {
+                if ($grid0.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")) {
+                    $grid0.css("color", "rgba(248, 113, 113, var(--tw-text-opacity))")
+                    $grid0.css("font-weight", "600")
+                    $grid1.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid1.css("font-weight", "400")
+                    $grid2.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid2.css("font-weight", "400")
+                    $grid3.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid3.css("font-weight", "400")
+                    $grid4.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid4.css("font-weight", "400")
+                    $grid5.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid5.css("font-weight", "400")
+                    $grid6.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid6.css("font-weight", "400")
+                }
+            });
+            $grid1.click(function () {
+                if ($grid1.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")) {
+                    $grid1.css("color", "rgba(248, 113, 113, var(--tw-text-opacity))")
+                    $grid1.css("font-weight", "600")
+                    $grid0.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid0.css("font-weight", "400")
+                    $grid2.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid2.css("font-weight", "400")
+                    $grid3.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid3.css("font-weight", "400")
+                    $grid4.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid4.css("font-weight", "400")
+                    $grid5.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid5.css("font-weight", "400")
+                    $grid6.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid6.css("font-weight", "400")
+                }
+            });
+            $grid2.click(function () {
+                if ($grid2.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")) {
+                    $grid2.css("color", "rgba(248, 113, 113, var(--tw-text-opacity))")
+                    $grid2.css("font-weight", "600")
+                    $grid0.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid0.css("font-weight", "400")
+                    $grid1.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid1.css("font-weight", "400")
+                    $grid3.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid3.css("font-weight", "400")
+                    $grid4.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid4.css("font-weight", "400")
+                    $grid5.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid5.css("font-weight", "400")
+                    $grid6.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid6.css("font-weight", "400")
+                }
+            });
+            $grid3.click(function () {
+                if ($grid3.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")) {
+                    $grid3.css("color", "rgba(248, 113, 113, var(--tw-text-opacity))")
+                    $grid3.css("font-weight", "600")
+                    $grid0.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid0.css("font-weight", "400")
+                    $grid1.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid1.css("font-weight", "400")
+                    $grid2.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid2.css("font-weight", "400")
+                    $grid4.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid4.css("font-weight", "400")
+                    $grid5.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid5.css("font-weight", "400")
+                    $grid6.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid6.css("font-weight", "400")
+                }
+            });
+            $grid4.click(function () {
+                if ($grid4.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")) {
+                    $grid4.css("color", "rgba(248, 113, 113, var(--tw-text-opacity))")
+                    $grid4.css("font-weight", "600")
+                    $grid0.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid0.css("font-weight", "400")
+                    $grid1.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid1.css("font-weight", "400")
+                    $grid2.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid2.css("font-weight", "400")
+                    $grid3.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid3.css("font-weight", "400")
+                    $grid5.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid5.css("font-weight", "400")
+                    $grid6.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid6.css("font-weight", "400")
+                }
+            });
+            $grid5.click(function () {
+                if ($grid5.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")) {
+                    $grid5.css("color", "rgba(248, 113, 113, var(--tw-text-opacity))")
+                    $grid5.css("font-weight", "600")
+                    $grid0.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid0.css("font-weight", "400")
+                    $grid1.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid1.css("font-weight", "400")
+                    $grid2.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid2.css("font-weight", "400")
+                    $grid3.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid3.css("font-weight", "400")
+                    $grid4.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid4.css("font-weight", "400")
+                    $grid6.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid6.css("font-weight", "400")
+                }
+            });
+            $grid6.click(function () {
+                if ($grid6.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")) {
+                    $grid6.css("color", "rgba(248, 113, 113, var(--tw-text-opacity))")
+                    $grid6.css("font-weight", "600")
+                    $grid0.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid0.css("font-weight", "400")
+                    $grid1.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid1.css("font-weight", "400")
+                    $grid2.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid2.css("font-weight", "400")
+                    $grid3.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid3.css("font-weight", "400")
+                    $grid4.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid4.css("font-weight", "400")
+                    $grid5.css("color", "rgba(156, 163, 175, var(--tw-text-opacity))")
+                    $grid5.css("font-weight", "400")
+                }
+            });
+        })
+
+
+        function showNews(date) {
+            // Click한 날짜만 뉴스로 보이도록 수정
+            $.ajax({
+                type: 'GET',
+                url: '/api/hottest',
+                data: {
+                    date: date,
+                },
+                success: function (response) {
+                    if (response["result"] == "success") {
+                        let news = response['all_news']
+                        for (let i = 0; i < news.length; i++) {
+                            makeCard(news[i]['icon'], news[i]['url'], news[i]['title'], news[i]['desc'], news[i]['date'], news[i]['media'])
+                        }
+                    } else {
+                        alert("기사를 받아오지 못했습니다");
+                    }
+                }
+            });
+        }
+
+        function makeCard(icon, url, title, desc, date, media) {
+            let tempHtml = `<div class="flex">
+                    <div class="flex-shrink-0">
+                        <div class="flex items-center justify-center h-10 w-12 rounded-md bg-indigo-300 text-white">
+                            <img class="h-6 w-auto sm:h-10" src="${icon}">
+                        </div>
+                    </div>
+                    <div class="ml-4">
+                        <dt class="text-lg leading-6 font-medium text-gray-900">
+                            <a class="a_t font-semibold" href="${url}">${title}</a>
+                        </dt>
+                        <dd class="mt-2 text-sm text-gray-500">
+                            ${desc} <a>...</a>
+                            <a class="mt-2 text-xs text-gray-500 text-blue-300">${date} <a class="mt-2 text-xs text-blue-500">${media}</a></a>
+                        </dd>
+
+                    </div>
+                </div>`;
+            $("#news-box").append(tempHtml);
+        }
+
+    </script>
+
+
+</head>
+<body>
+<!-- This example requires Tailwind CSS v2.0+ -->
+<div class="relative bg-white overflow-hidden">
+    <div class="max-w-7xl mx-auto">
+        <div class="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
+            <svg class="hidden lg:block absolute right-0 inset-y-0 h-full w-48 text-white transform translate-x-1/2"
+                 fill="currentColor" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                <polygon points="50,0 100,0 50,100 0,100"/>
+            </svg>
+
+            <div class="relative pt-6 px-4 sm:px-6 lg:px-8">
+                <nav class="relative flex items-center justify-between sm:h-10 lg:justify-start" aria-label="Global">
+                    <div class="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
+                        <div class="flex items-center justify-between w-full md:w-auto">
+                            <a href="/">
+                                <span class="sr-only">Workflow</span>
+                                <img class="h-8 w-auto sm:h-10" src="../static/newsclip.png">
+                            </a>
+                            <div class="-mr-2 flex items-center md:hidden">
+                                <button type="button"
+                                        class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                                        id="main-menu" aria-haspopup="true">
+                                    <span class="sr-only">Open main menu</span>
+                                    <!-- Heroicon name: menu -->
+                                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                         viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M4 6h16M4 12h16M4 18h16"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hidden md:block md:ml-10 md:pr-4 md:space-x-8">
+
+                        <a href="/latest" class="font-medium text-gray-500 hover:text-gray-900">최신뉴스</a>
+
+                        <a href="/hottest" class="font-medium text-gray-500 hover:text-gray-900">주요뉴스</a>
+
+                        <!-- <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">로그인</a> -->
+
+                    </div>
+                </nav>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+
+
+<!-- This example requires Tailwind CSS v2.0+ -->
+<div class="py-12 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="lg:text-center">
+            <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">hottest news</h2>
+            <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                주요뉴스
+            </p>
+            <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+                매일매일 오전 8시 업데이트! 오늘의 주요 뉴스를 만나보세요.
+            </p>
+
+            <div class="grid grid-cols-7 divide-x-2 divide-blue-300 m-4 flex -space-x-0.5 text-sm text-gray-400 font-normal">
+                <div class="grid0"><span id="date_0" class="cursor-pointer"></span></div>
+                <div class="grid1"><span id="date_1" class="cursor-pointer"></span></div>
+                <div class="grid2"><span id="date_2" class="cursor-pointer"></span></div>
+                <div class="grid3"><span id="date_3" class="cursor-pointer"></span></div>
+                <div class="grid4"><span id="date_4" class="cursor-pointer"></span></div>
+                <div class="grid5"><span id="date_5" class="cursor-pointer"></span></div>
+                <div class="grid6"><span id="date_6" class="cursor-pointer"></span></div>
+            </div>
+
+
+        </div>
+
+        <div class="mt-10">
+            <dl id="news-box" class="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
+
+            </dl>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
